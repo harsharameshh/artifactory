@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: "com.jfrog.artifactory"
 apply plugin: "org.sonarqube"
+apply plugin: 'maven-publish'
 
 group = 'com.github.jitpack'
 
@@ -10,6 +11,14 @@ targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 sonarqube {
@@ -75,6 +84,9 @@ artifactory {
             maven = true
             
         }
+        defaults {
+   publications ('mavenJava')
+}
     }
     resolve {
         repository {
